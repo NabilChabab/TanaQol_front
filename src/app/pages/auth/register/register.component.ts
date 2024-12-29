@@ -49,5 +49,9 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  loginWithGoogle(): void {
+    this.authService.initiateGoogleLogin();
+  }
+
   ngOnInit(): void {}
 }

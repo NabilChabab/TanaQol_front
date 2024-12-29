@@ -13,10 +13,11 @@
               class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
               type="button"
             >
-              <img alt="..." class="w-5 mr-1" src="assets/img/github.svg" />
-              Github
+            <img alt="..." class="w-5 mr-1" src="../../../../assets/img/microsoft.png" />
+            Microsoft
             </button>
             <button
+            (click)="loginWithGoogle()"
               class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
               type="button"
             >
@@ -54,7 +55,7 @@
                 {{ errorMessages['username'] }}
               </small>
             </div>
-          
+
             <div class="relative w-full mb-3">
               <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="email">
                 Email
@@ -78,7 +79,7 @@
                 {{ errorMessages['email'] }}
               </small>
             </div>
-          
+
             <div class="relative w-full mb-3">
               <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="password">
                 Password
@@ -102,7 +103,7 @@
                 {{ errorMessages['password'] }}
               </small>
             </div>
-          
+
             <div>
               <label class="inline-flex items-center cursor-pointer">
                 <input
@@ -118,7 +119,7 @@
                 </span>
               </label>
             </div>
-          
+
             <div class="text-center mt-6">
               <button
                 type="submit"
@@ -137,7 +138,7 @@
           </a>
         </div>
       </div>
-      
+
     </div>
   </div>
 </div>
