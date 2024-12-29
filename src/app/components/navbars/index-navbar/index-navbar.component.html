@@ -1,0 +1,52 @@
+<nav class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-transparent shadow">
+  <div class="container px-4 mx-auto flex flex-wrap items-center justify-between">
+    <div class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+      <a
+        [routerLink]="['/']"
+        class="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+        href="#pablo"
+      >
+        T A N A Q O L
+      </a>
+      <button
+        class="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+        type="button"
+        (click)="setNavbarOpen()"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <div class="lg:flex flex-grow items-center" id="example-navbar-warning">
+      <ul class="flex flex-col lg:flex-row list-none lg:ml-auto cursor-pointer">
+        <!-- Profile Picture -->
+        <li class="flex items-center" *ngIf="isAuthenticated">
+          <p-menu #menu [model]="items" [popup]="true"></p-menu>
+          <img
+            [src]="profilePicture"
+            alt="Profile Avatar"
+            class="rounded-full w-10 h-10"
+            (click)="menu.toggle($event)"
+          />
+        </li>
+
+        <li class="flex items-center ml-3">
+          <div *ngIf="isAuthenticated; else signInButton" class="text-white font-bold">
+            {{ googleUsername || username }}
+          </div>
+
+          <ng-template #signInButton>
+            <button
+              style="background-color: #11a104"
+              class="text-white active:bg-red-700 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+              type="button"
+              [routerLink]="['/auth/login']"
+            >
+              Sign in
+            </button>
+          </ng-template>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
