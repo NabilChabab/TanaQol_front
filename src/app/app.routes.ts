@@ -29,7 +29,6 @@ export const routes: Routes = [
     component: AdminComponent,
     children: [
       { path: 'admin', component: UsersComponent, canActivate : [RoleGuard], data: { role: 'ROLE_ADMIN' } },
-      { path: 'member', component: CompetitionsComponent, canActivate : [RoleGuard] , data: { role: 'ROLE_MEMBER' } },
     ]
   },
   {
@@ -44,9 +43,6 @@ export const routes: Routes = [
       {
         path: 'index',component : IndexComponent
       },
-      {
-        path: 'profile',component : ProfileComponent , canActivate : [RoleGuard] , data: { role: ['ROLE_ADMIN', 'ROLE_MEMBER' , 'ROLE_JURY'] }
-      }
     ]
 
   }

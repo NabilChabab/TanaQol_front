@@ -58,10 +58,8 @@ export class IndexNavbarComponent implements OnInit {
             label: 'dashboard',
             icon: 'pi pi-home',
             command: () => {
-              if (this.role === 'ADMIN') {
+              if (this.role === 'ROLE_ADMIN') {
                 this.router.navigate(['/dashboard/admin']);
-              } else {
-                this.router.navigate(['/dashboard/member']);
               }
             },
           },

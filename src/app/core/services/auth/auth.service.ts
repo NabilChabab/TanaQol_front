@@ -92,24 +92,28 @@ export class AuthService {
     );
   }
 
-  handleOAuth2Callback(token: string, refreshToken: string): void {
-    this.saveTokens(token, refreshToken);
+  handleOAuth2Callback(token: string): void {
+    this.saveTokens(token, '');
+
     const decodedToken = this.decodeToken(token);
     if (decodedToken) {
+      const role = decodedToken.role;
+      localStorage.setItem('role', role);
       this.store.dispatch(
         loginSuccess({
           id: decodedToken.id,
           username: decodedToken.username,
-          role: decodedToken.role,
+          role: role,
         })
       );
-      localStorage.setItem('role', decodedToken.role);
       this.notificationService.showSuccess('Login Successful', `Welcome, ${decodedToken.username}!`);
+    } else {
+      this.notificationService.showError('Login Failed', 'Invalid token received');
     }
   }
 
   getUserInfo(): { name: string; picture: string } | null {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('access_token');
     if (token) {
       const decodedToken: any = jwtDecode(token);
       return {
