@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
-import Chart from "chart.js";
+import { Chart, ChartType } from "chart.js";
+import Config from "chart.js/dist/core/core.config";
 
 @Component({
   selector: "app-card-bar-chart",
@@ -9,9 +10,10 @@ export class CardBarChartComponent implements OnInit, AfterViewInit {
   constructor() {}
 
   ngOnInit() {}
+
   ngAfterViewInit() {
-    let config = {
-      type: "bar",
+    const config = {
+      type: "bar" as ChartType,
       data: {
         labels: [
           "January",
@@ -24,7 +26,7 @@ export class CardBarChartComponent implements OnInit, AfterViewInit {
         ],
         datasets: [
           {
-            label: new Date().getFullYear(),
+            label: String(new Date().getFullYear()),
             backgroundColor: "#ed64a6",
             borderColor: "#ed64a6",
             data: [30, 78, 56, 34, 100, 45, 13],
@@ -32,7 +34,7 @@ export class CardBarChartComponent implements OnInit, AfterViewInit {
             barThickness: 8,
           },
           {
-            label: new Date().getFullYear() - 1,
+            label: String(new Date().getFullYear() - 1),
             fill: false,
             backgroundColor: "#4c51bf",
             borderColor: "#4c51bf",
@@ -44,66 +46,52 @@ export class CardBarChartComponent implements OnInit, AfterViewInit {
       options: {
         maintainAspectRatio: false,
         responsive: true,
-        title: {
-          display: false,
-          text: "Orders Chart",
-        },
-        tooltips: {
-          mode: "index",
-          intersect: false,
-        },
-        hover: {
-          mode: "nearest",
-          intersect: true,
-        },
-        legend: {
-          labels: {
-            fontColor: "rgba(0,0,0,.4)",
+        plugins: {
+          title: {
+            display: false,
+            text: "Orders Chart",
           },
-          align: "end",
-          position: "bottom",
+          tooltip: {
+            mode: "index",
+            intersect: false,
+          },
+          legend: {
+            labels: {
+              color: "rgba(0,0,0,.4)",
+            },
+            align: "end",
+            position: "bottom", // Correct and allowed value
+          },
         },
         scales: {
-          xAxes: [
-            {
-              display: false,
-              scaleLabel: {
-                display: true,
-                labelString: "Month",
-              },
-              gridLines: {
-                borderDash: [2],
-                borderDashOffset: [2],
-                color: "rgba(33, 37, 41, 0.3)",
-                zeroLineColor: "rgba(33, 37, 41, 0.3)",
-                zeroLineBorderDash: [2],
-                zeroLineBorderDashOffset: [2],
-              },
-            },
-          ],
-          yAxes: [
-            {
+          x: {
+            display: false,
+            title: {
               display: true,
-              scaleLabel: {
-                display: false,
-                labelString: "Value",
-              },
-              gridLines: {
-                borderDash: [2],
-                drawBorder: false,
-                borderDashOffset: [2],
-                color: "rgba(33, 37, 41, 0.2)",
-                zeroLineColor: "rgba(33, 37, 41, 0.15)",
-                zeroLineBorderDash: [2],
-                zeroLineBorderDashOffset: [2],
-              },
+              text: "Month",
             },
-          ],
+            grid: {
+              borderDash: [2],
+              color: "rgba(33, 37, 41, 0.3)",
+              zeroLineColor: "rgba(33, 37, 41, 0.3)",
+            },
+          },
+          y: {
+            display: true,
+            title: {
+              display: false,
+              text: "Value",
+            },
+            grid: {
+              borderDash: [2],
+              color: "rgba(33, 37, 41, 0.2)",
+            },
+          },
         },
       },
     };
-    let ctx: any = document.getElementById("bar-chart");
-    ctx = ctx.getContext("2d");
-    new Chart(ctx, config);
+
+    const ctx = (document.getElementById("bar-chart") as HTMLCanvasElement).getContext("2d");
+    new Chart(ctx!, config);
   }
 }
