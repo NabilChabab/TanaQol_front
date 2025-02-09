@@ -1,20 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../../core/services/auth/auth.service';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UserState } from '../../../core/store/user/user.state';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { Router, RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'app-index-navbar',
-  templateUrl: './index-navbar.component.html',
+  selector: 'app-admin-navbar',
+  templateUrl: './admin-navbar.component.html',
   standalone: true,
-  imports: [RouterModule, CommonModule, MenuModule],
+  imports: [CommonModule , MenuModule , RouterModule],
 })
-export class IndexNavbarComponent implements OnInit {
+export class AdminNavbarComponent implements OnInit {
   items: MenuItem[] | undefined;
   navbarOpen = false;
   user$: Observable<UserState>;
@@ -28,14 +28,14 @@ export class IndexNavbarComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private store: Store<{ user: UserState }>,
+    private store: Store<{ user: UserState }>
   ) {
     this.user$ = this.store.select('user');
   }
 
   ngOnInit(): void {
     const userInfo = this.authService.getUserInfo();
-    this.user$.subscribe(user => {
+    this.user$.subscribe((user) => {
       this.username = user.username;
       this.isAuthenticated = user.isAuthenticated;
       this.role = user.role;

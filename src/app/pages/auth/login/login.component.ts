@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { Observable } from 'rxjs';
@@ -19,13 +24,14 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessages: { [key: string]: string } = {};
   user$: Observable<UserState>;
+  loading = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private store: Store<{ user: UserState }>,
+    private store: Store<{ user: UserState }>
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -35,22 +41,27 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user$.subscribe(user => {
+    this.user$.subscribe((user) => {
       console.log('Current User State:', user);
     });
   }
 
   onLogin(): void {
     if (this.loginForm.valid) {
+      this.loading = true;
       this.authService.login(this.loginForm.value).subscribe({
         next: (response: any) => {
+          this.loading = false;
           this.router.navigate(['/']);
         },
-        error: error => {
+        error: (error) => {
+          setTimeout(() => {
+            this.loading = false;
+          }, 2000);
           this.errorMessages = {};
           if (error.error) {
             const backendErrors = error.error;
-            Object.keys(backendErrors).forEach(key => {
+            Object.keys(backendErrors).forEach((key) => {
               this.errorMessages[key] = backendErrors[key];
             });
           } else {

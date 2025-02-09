@@ -1,27 +1,58 @@
-<nav class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-transparent shadow bg-black">
-  <div class="container px-4 mx-auto flex flex-wrap items-center justify-between">
-    <div class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+<nav class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg shadow glass-nav">
+  <div style="display: flex ; align-items: center; justify-content: space-between; width: 100%" class="container mx-auto">
+    <div>
       <a
         [routerLink]="['/']"
-        class="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
         href="#pablo"
       >
         T A N A Q O L
       </a>
-      <button
-        class="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-        type="button"
-        (click)="setNavbarOpen()"
-      >
-        <i class="fas fa-bars"></i>
-      </button>
     </div>
-    <div class="lg:flex flex-grow items-center" id="example-navbar-warning">
+
+    <div style="display: flex ; align-items: center; justify-content: center;width: 50%">
+      <a
+        [routerLink]="['/']"
+        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        href="#pablo"
+      >
+        Home
+      </a>
+
+      <a
+        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        href="#about-us"
+      >
+        About us
+      </a>
+      <a
+        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        href="#categories"
+      >
+        Categories
+      </a>
+      <a
+        [routerLink]="['/']"
+        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        href="#pablo"
+      >
+        Rides
+      </a>
+      <a
+        [routerLink]="['/']"
+        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        href="#pablo"
+      >
+        Contact us
+      </a>
+    </div>
+
+    <div  id="example-navbar-warning">
       <ul class="flex flex-col lg:flex-row list-none lg:ml-auto cursor-pointer">
         <li class="flex items-center" *ngIf="isAuthenticated">
           <p-menu #menu [model]="items" [popup]="true"></p-menu>
           <img
-            [src]="profilePicture"
+            [src]="profilePicture || 'https://ui-avatars.com/api/?name=' + username"
             alt="Profile Avatar"
             class="rounded-full w-10 h-10"
             (click)="menu.toggle($event)"
@@ -29,14 +60,13 @@
         </li>
 
         <li class="flex items-center ml-3">
-          <div *ngIf="isAuthenticated; else signInButton" class="text-white font-bold">
+          <div *ngIf="isAuthenticated; else signInButton" class="text-blueGray-800 font-bold">
             {{ googleUsername || username }}
           </div>
 
           <ng-template #signInButton>
             <button
-              style="background-color: #11a104"
-              class="text-white active:bg-red-700 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+              class="text-white bg-black rounded-full active:bg-red-700 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
               type="button"
               [routerLink]="['/auth/login']"
             >
@@ -45,7 +75,17 @@
           </ng-template>
         </li>
       </ul>
-
     </div>
   </div>
 </nav>
+
+<style>
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+    backdrop-filter: blur(50px); /* Glass blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Optional border for depth */
+    /* Subtle shadow */
+  }
+
+</style>

@@ -13,11 +13,15 @@
               class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
               type="button"
             >
-            <img alt="..." class="w-5 mr-1" src="../../../../assets/img/microsoft.png" />
-            Microsoft
+              <img
+                alt="..."
+                class="w-5 mr-1"
+                src="../../../../assets/img/microsoft.png"
+              />
+              Microsoft
             </button>
             <button
-            (click)="loginWithGoogle()"
+              (click)="loginWithGoogle()"
               class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
               type="button"
             >
@@ -33,7 +37,10 @@
           </div>
           <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
             <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="username">
+              <label
+                class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                for="username"
+              >
                 Username
               </label>
               <input
@@ -43,21 +50,84 @@
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Username"
                 [ngClass]="{
-                  'focus:ring-red-500': registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched) || errorMessages['username']
+                  'focus:ring-red-500':
+                    (registerForm.get('password')?.invalid &&
+                      (registerForm.get('password')?.dirty ||
+                        registerForm.get('password')?.touched)) ||
+                    errorMessages['username']
                 }"
-
               />
-              <div *ngIf="registerForm.get('username')?.invalid && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)">
-                <small class="error text-red-600" *ngIf="registerForm.get('username')?.errors?.['required']">Username is required</small>
+              <div
+                *ngIf="
+                  registerForm.get('username')?.invalid &&
+                  (registerForm.get('username')?.dirty ||
+                    registerForm.get('username')?.touched)
+                "
+              >
+                <small
+                  class="error text-red-600"
+                  *ngIf="registerForm.get('username')?.errors?.['required']"
+                  >Username is required</small
+                >
               </div>
               <!-- Backend Validation Error -->
-              <small *ngIf="errorMessages['username']" class="error text-red-600">
-                {{ errorMessages['username'] }}
+              <small
+                *ngIf="errorMessages['username']"
+                class="error text-red-600"
+              >
+                {{ errorMessages["username"] }}
+              </small>
+            </div>
+            <div class="relative w-full mb-3">
+              <label
+                class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                for="phone"
+              >
+                Phone number
+              </label>
+              <input
+                type="phone"
+                id="phone"
+                formControlName="phone"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                placeholder="phone"
+                [ngClass]="{
+                  'focus:ring-red-500':
+                    (registerForm.get('phone')?.invalid &&
+                      (registerForm.get('phone')?.dirty ||
+                        registerForm.get('phone')?.touched)) ||
+                    errorMessages['phone']
+                }"
+              />
+              <div
+                *ngIf="
+                  registerForm.get('phone')?.invalid &&
+                  (registerForm.get('phone')?.dirty ||
+                    registerForm.get('phone')?.touched)
+                "
+              >
+                <small
+                  class="error text-red-600"
+                  *ngIf="registerForm.get('phone')?.errors?.['required']"
+                  >phone is required</small
+                >
+                <small
+                  class="error text-red-600"
+                  *ngIf="registerForm.get('phone')?.errors?.['phone']"
+                  >Invalid phone format</small
+                >
+              </div>
+              <!-- Backend Validation Error -->
+              <small *ngIf="errorMessages['phone']" class="error text-red-600">
+                {{ errorMessages["phone"] }}
               </small>
             </div>
 
             <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="email">
+              <label
+                class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                for="email"
+              >
                 Email
               </label>
               <input
@@ -67,21 +137,42 @@
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Email"
                 [ngClass]="{
-                  'focus:ring-red-500': registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched) || errorMessages['email']
+                  'focus:ring-red-500':
+                    (registerForm.get('email')?.invalid &&
+                      (registerForm.get('email')?.dirty ||
+                        registerForm.get('email')?.touched)) ||
+                    errorMessages['email']
                 }"
               />
-              <div *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
-                <small class="error text-red-600" *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</small>
-                <small class="error text-red-600" *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format</small>
+              <div
+                *ngIf="
+                  registerForm.get('email')?.invalid &&
+                  (registerForm.get('email')?.dirty ||
+                    registerForm.get('email')?.touched)
+                "
+              >
+                <small
+                  class="error text-red-600"
+                  *ngIf="registerForm.get('email')?.errors?.['required']"
+                  >Email is required</small
+                >
+                <small
+                  class="error text-red-600"
+                  *ngIf="registerForm.get('email')?.errors?.['email']"
+                  >Invalid email format</small
+                >
               </div>
               <!-- Backend Validation Error -->
               <small *ngIf="errorMessages['email']" class="error text-red-600">
-                {{ errorMessages['email'] }}
+                {{ errorMessages["email"] }}
               </small>
             </div>
 
             <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="password">
+              <label
+                class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                for="password"
+              >
                 Password
               </label>
               <input
@@ -91,16 +182,33 @@
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Password"
                 [ngClass]="{
-                  'focus:ring-red-500': registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched) || errorMessages['password']
+                  'focus:ring-red-500':
+                    (registerForm.get('password')?.invalid &&
+                      (registerForm.get('password')?.dirty ||
+                        registerForm.get('password')?.touched)) ||
+                    errorMessages['password']
                 }"
               />
-              <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
-                <small class="error text-red-600" *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</small>
+              <div
+                *ngIf="
+                  registerForm.get('password')?.invalid &&
+                  (registerForm.get('password')?.dirty ||
+                    registerForm.get('password')?.touched)
+                "
+              >
+                <small
+                  class="error text-red-600"
+                  *ngIf="registerForm.get('password')?.errors?.['required']"
+                  >Password is required</small
+                >
               </div>
 
               <!-- Backend Validation Error -->
-              <small *ngIf="errorMessages['password']" class="error text-red-600">
-                {{ errorMessages['password'] }}
+              <small
+                *ngIf="errorMessages['password']"
+                class="error text-red-600"
+              >
+                {{ errorMessages["password"] }}
               </small>
             </div>
 
@@ -138,9 +246,6 @@
           </a>
         </div>
       </div>
-
     </div>
   </div>
 </div>
-
-

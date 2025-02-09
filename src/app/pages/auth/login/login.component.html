@@ -83,13 +83,15 @@
               </label>
             </div>
 
+
             <div class="text-center mt-6">
               <button
                 class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                 type="submit"
-                [disabled]="loginForm.invalid"
+                [disabled]="loginForm.invalid || loading"
               >
-                Sign In
+                <span *ngIf="!loading">Sign In</span>
+                <span *ngIf="loading" class="car-animation">🚗💨</span>
               </button>
             </div>
           </form>
@@ -110,3 +112,24 @@
     </div>
   </div>
 </div>
+
+
+<style>
+  .car-animation {
+    display: inline-block;
+    animation: ride 1.5s linear infinite;
+    font-size: 25px;
+  }
+
+  @keyframes ride {
+    0% {
+      transform: translateX(50%);
+    }
+    50% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+</style>
