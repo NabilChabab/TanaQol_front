@@ -1,58 +1,76 @@
-<nav class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg shadow glass-nav">
-  <div style="display: flex ; align-items: center; justify-content: space-between; width: 100%" class="container mx-auto">
+<nav
+  class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg shadow bg-black"
+>
+  <div
+    style="
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    "
+    class="container mx-auto"
+  >
     <div>
       <a
         [routerLink]="['/']"
-        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+        class="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
         href="#pablo"
       >
         T A N A Q O L
       </a>
     </div>
-
-    <div style="display: flex ; align-items: center; justify-content: center;width: 50%">
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+      "
+    >
       <a
         [routerLink]="['/']"
-        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        class="text-white text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
         href="#pablo"
       >
         Home
       </a>
 
       <a
-        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        class="text-white text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
         href="#about-us"
       >
         About us
       </a>
       <a
-        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        class="text-white text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
         href="#categories"
       >
         Categories
       </a>
       <a
         [routerLink]="['/']"
-        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        class="text-white text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
         href="#pablo"
       >
         Rides
       </a>
       <a
         [routerLink]="['/']"
-        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        class="text-white text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
         href="#pablo"
       >
         Contact us
       </a>
     </div>
 
-    <div  id="example-navbar-warning">
+    <div id="example-navbar-warning">
       <ul class="flex flex-col lg:flex-row list-none lg:ml-auto cursor-pointer">
         <li class="flex items-center" *ngIf="isAuthenticated">
           <p-menu #menu [model]="items" [popup]="true"></p-menu>
           <img
-            [src]="profilePicture || 'https://ui-avatars.com/api/?name=' + username"
+            [src]="
+              profilePicture || 'https://ui-avatars.com/api/?name=' + username
+            "
             alt="Profile Avatar"
             class="rounded-full w-10 h-10"
             (click)="menu.toggle($event)"
@@ -60,13 +78,16 @@
         </li>
 
         <li class="flex items-center ml-3">
-          <div *ngIf="isAuthenticated; else signInButton" class="text-blueGray-800 font-bold">
+          <div
+            *ngIf="isAuthenticated; else signInButton"
+            class="text-white font-bold"
+          >
             {{ googleUsername || username }}
           </div>
 
           <ng-template #signInButton>
             <button
-              class="text-white bg-black rounded-full active:bg-red-700 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+              class="text-black bg-white rounded-full active:bg-red-700 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
               type="button"
               [routerLink]="['/auth/login']"
             >
@@ -74,18 +95,67 @@
             </button>
           </ng-template>
         </li>
+        <li class="flex items-center ml-3" *ngIf="role === 'ROLE_CUSTOMER'">
+          <button
+            type="button"
+            data-drawer-target="drawer-right-example"
+            data-drawer-show="drawer-right-example"
+            data-drawer-placement="right"
+            aria-controls="drawer-right-example"
+            class="text-black bg-white rounded-full text-xs font-bold uppercase px-4 py-2 rounded shadow hover:bg-black hover:text-white outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+          >
+            Become a driver
+          </button>
+        </li>
       </ul>
+    </div>
+    <div
+      id="drawer-right-example"
+      class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-black"
+      tabindex="-1"
+      aria-labelledby="drawer-right-label"
+      style="width: 700px"
+    >
+      <h5
+        id="drawer-right-label"
+        class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"
+      >
+        <svg
+          class="w-4 h-4 me-2.5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+          /></svg
+        >Request To Become a Driver
+      </h5>
+      <button
+        type="button"
+        data-drawer-hide="drawer-right-example"
+        aria-controls="drawer-right-example"
+        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white"
+      >
+        <svg
+          class="w-3 h-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+          />
+        </svg>
+        <span class="sr-only">Close menu</span>
+      </button>
+      <app-driver-role-modal></app-driver-role-modal>
     </div>
   </div>
 </nav>
-
-<style>
-  .glass-nav {
-    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
-    backdrop-filter: blur(50px); /* Glass blur effect */
-    -webkit-backdrop-filter: blur(10px); /* Safari support */
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Optional border for depth */
-    /* Subtle shadow */
-  }
-
-</style>
