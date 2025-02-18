@@ -9,6 +9,10 @@ import { LandingComponent } from './layouts/landing/landing.component';
 import { IndexComponent } from './pages/landing/landing.component';
 import { OAuth2CallbackComponent } from './pages/auth/oauth/oauth.component';
 import { StatisticsComponent } from './pages/dashboard/admin/statistics/statistics.component';
+import { DriverStatisticsComponent } from './pages/dashboard/driver/statistics/driver-statistics.component';
+import { DriverComponent } from './layouts/driver/driver.component';
+import { UsersComponent } from './pages/dashboard/admin/users/users.component';
+import { VehicleComponent } from './pages/dashboard/admin/vehicles/vehicles.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +30,15 @@ export const routes: Routes = [
     component: AdminComponent,
     children: [
       { path: 'dashboard', component: StatisticsComponent, canActivate : [RoleGuard], data: { role: 'ROLE_ADMIN' } },
+      { path: 'users', component: UsersComponent, canActivate : [RoleGuard], data: { role: 'ROLE_ADMIN' } },
+      { path: 'vehicles', component: VehicleComponent, canActivate : [RoleGuard], data: { role: 'ROLE_ADMIN' } },
+    ]
+  },
+  {
+    path: 'driver',
+    component: DriverComponent,
+    children: [
+      { path: 'dashboard', component: DriverStatisticsComponent, canActivate : [RoleGuard], data: { role: 'ROLE_DRIVER' } },
     ]
   },
   {
