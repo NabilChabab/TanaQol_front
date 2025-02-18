@@ -83,7 +83,8 @@ export class AuthService {
             })
           );
           localStorage.setItem('role', decodedToken.role);
-          this.notificationService.showSuccess('Login Successful', `Welcome, ${decodedToken.role}!`);
+          localStorage.setItem('authId', decodedToken.id);
+          this.notificationService.showSuccess('Login Successful', `Welcome, ${decodedToken.username}!`);
         },
         error: () => {
           this.notificationService.showError('Login Failed', 'Invalid email or password');
