@@ -2,16 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth/auth.service';
-import { CardUsersComponent } from '../../../../components/cards/card-users/card-users.component';
+import { AdminCardVehiclesComponent } from '../../../../components/cards/card-admin-vehicles/card-admin-vehicles.component';
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-vehicles',
   standalone: true,
-  imports: [CommonModule , RouterModule , CardUsersComponent],
-  templateUrl: './users.component.html',
-  styleUrl: './users.component.css'
+  imports: [CommonModule , RouterModule , AdminCardVehiclesComponent],
+  templateUrl: './vehicles.component.html',
+  styleUrl: './vehicles.component.css'
 })
-export class UsersComponent {
+export class VehicleComponent {
 
 
   constructor(private authService : AuthService , private router : Router) { }
@@ -20,5 +20,4 @@ export class UsersComponent {
     this.authService.clearTokens();
     this.router.navigate(['/auth/login']);
   }
-
 }

@@ -36,48 +36,98 @@
             <small>Or sign up with credentials</small>
           </div>
           <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-            <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                for="username"
-              >
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                formControlName="username"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                placeholder="Username"
-                [ngClass]="{
-                  'focus:ring-red-500':
-                    (registerForm.get('password')?.invalid &&
-                      (registerForm.get('password')?.dirty ||
-                        registerForm.get('password')?.touched)) ||
-                    errorMessages['username']
-                }"
-              />
-              <div
-                *ngIf="
-                  registerForm.get('username')?.invalid &&
-                  (registerForm.get('username')?.dirty ||
-                    registerForm.get('username')?.touched)
-                "
-              >
-                <small
-                  class="error text-red-600"
-                  *ngIf="registerForm.get('username')?.errors?.['required']"
-                  >Username is required</small
+            <!-- First Name & Last Name in the same line -->
+            <div class="flex gap-6 w-full mb-3">
+              <!-- First Name -->
+              <div class="w-1/2">
+                <label
+                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                  for="firstName"
                 >
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  formControlName="firstName"
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  placeholder="First Name"
+                  [ngClass]="{
+                    'focus:ring-red-500':
+                      (registerForm.get('firstName')?.invalid &&
+                        (registerForm.get('firstName')?.dirty ||
+                          registerForm.get('firstName')?.touched)) ||
+                      errorMessages['firstName']
+                  }"
+                />
+                <div
+                  *ngIf="
+                    registerForm.get('firstName')?.invalid &&
+                    (registerForm.get('firstName')?.dirty ||
+                      registerForm.get('firstName')?.touched)
+                  "
+                >
+                  <small
+                    class="error text-red-600"
+                    *ngIf="registerForm.get('firstName')?.errors?.['required']"
+                  >
+                    First Name is required
+                  </small>
+                </div>
+                <small
+                  *ngIf="errorMessages['firstName']"
+                  class="error text-red-600"
+                >
+                  {{ errorMessages["firstName"] }}
+                </small>
               </div>
-              <!-- Backend Validation Error -->
-              <small
-                *ngIf="errorMessages['username']"
-                class="error text-red-600"
-              >
-                {{ errorMessages["username"] }}
-              </small>
+
+              <!-- Last Name -->
+              <div class="w-1/2">
+                <label
+                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                  for="lastName"
+                >
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  formControlName="lastName"
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  placeholder="Last Name"
+                  [ngClass]="{
+                    'focus:ring-red-500':
+                      (registerForm.get('lastName')?.invalid &&
+                        (registerForm.get('lastName')?.dirty ||
+                          registerForm.get('lastName')?.touched)) ||
+                      errorMessages['lastName']
+                  }"
+                />
+                <div
+                  *ngIf="
+                    registerForm.get('lastName')?.invalid &&
+                    (registerForm.get('lastName')?.dirty ||
+                      registerForm.get('lastName')?.touched)
+                  "
+                >
+                  <small
+                    class="error text-red-600"
+                    *ngIf="registerForm.get('lastName')?.errors?.['required']"
+                  >
+                    Last Name is required
+                  </small>
+                </div>
+                <small
+                  *ngIf="errorMessages['lastName']"
+                  class="error text-red-600"
+                >
+                  {{ errorMessages["lastName"] }}
+                </small>
+              </div>
             </div>
+
+            <!-- Phone Number -->
             <div class="relative w-full mb-3">
               <label
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -90,7 +140,7 @@
                 id="phone"
                 formControlName="phone"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                placeholder="phone"
+                placeholder="Phone"
                 [ngClass]="{
                   'focus:ring-red-500':
                     (registerForm.get('phone')?.invalid &&
@@ -109,20 +159,22 @@
                 <small
                   class="error text-red-600"
                   *ngIf="registerForm.get('phone')?.errors?.['required']"
-                  >phone is required</small
                 >
+                  Phone is required
+                </small>
                 <small
                   class="error text-red-600"
                   *ngIf="registerForm.get('phone')?.errors?.['phone']"
-                  >Invalid phone format</small
                 >
+                  Invalid phone format
+                </small>
               </div>
-              <!-- Backend Validation Error -->
               <small *ngIf="errorMessages['phone']" class="error text-red-600">
                 {{ errorMessages["phone"] }}
               </small>
             </div>
 
+            <!-- Email -->
             <div class="relative w-full mb-3">
               <label
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -154,20 +206,22 @@
                 <small
                   class="error text-red-600"
                   *ngIf="registerForm.get('email')?.errors?.['required']"
-                  >Email is required</small
                 >
+                  Email is required
+                </small>
                 <small
                   class="error text-red-600"
                   *ngIf="registerForm.get('email')?.errors?.['email']"
-                  >Invalid email format</small
                 >
+                  Invalid email format
+                </small>
               </div>
-              <!-- Backend Validation Error -->
               <small *ngIf="errorMessages['email']" class="error text-red-600">
                 {{ errorMessages["email"] }}
               </small>
             </div>
 
+            <!-- Password -->
             <div class="relative w-full mb-3">
               <label
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -199,11 +253,10 @@
                 <small
                   class="error text-red-600"
                   *ngIf="registerForm.get('password')?.errors?.['required']"
-                  >Password is required</small
                 >
+                  Password is required
+                </small>
               </div>
-
-              <!-- Backend Validation Error -->
               <small
                 *ngIf="errorMessages['password']"
                 class="error text-red-600"
@@ -212,6 +265,7 @@
               </small>
             </div>
 
+            <!-- Privacy Policy Checkbox -->
             <div>
               <label class="inline-flex items-center cursor-pointer">
                 <input
@@ -228,6 +282,7 @@
               </label>
             </div>
 
+            <!-- Submit Button -->
             <div class="text-center mt-6">
               <button
                 type="submit"

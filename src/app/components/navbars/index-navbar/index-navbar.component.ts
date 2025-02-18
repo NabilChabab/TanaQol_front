@@ -7,12 +7,14 @@ import { Observable } from 'rxjs';
 import { UserState } from '../../../core/store/user/user.state';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
+import { SidebarModule } from 'primeng/sidebar';
+import { DriverRoleModalComponent } from '../../modals/driver-role-modal/driver-role-modal.component';
 
 @Component({
   selector: 'app-index-navbar',
   templateUrl: './index-navbar.component.html',
   standalone: true,
-  imports: [RouterModule, CommonModule, MenuModule],
+  imports: [RouterModule, CommonModule, MenuModule , SidebarModule , DriverRoleModalComponent],
 })
 export class IndexNavbarComponent implements OnInit {
   items: MenuItem[] | undefined;
@@ -24,6 +26,11 @@ export class IndexNavbarComponent implements OnInit {
   isAuthenticated = false;
   profilePicture: string | null = null;
   defaultProfilePicture = 'https://i.pravatar.cc/150';
+  visible2: boolean = false;
+
+  isDrawerOpen = false;
+
+
 
   constructor(
     public authService: AuthService,
@@ -54,15 +61,22 @@ export class IndexNavbarComponent implements OnInit {
       {
         label: 'Options',
         items: [
-          {
-            label: 'dashboard',
-            icon: 'pi pi-home',
-            command: () => {
-              if (this.role === 'ROLE_ADMIN') {
-                this.router.navigate(['/admin/dashboard']);
-              }
-            },
-          },
+          ...(this.role === 'ROLE_ADMIN' || this.role === 'ROLE_DRIVER'
+            ? [
+                {
+                  label: 'dashboard',
+                  icon: 'pi pi-home',
+                  command: () => {
+                    if (this.role === 'ROLE_ADMIN') {
+                      this.router.navigate(['/admin/dashboard']);
+                    }
+                    if (this.role === 'ROLE_DRIVER') {
+                      this.router.navigate(['/driver/dashboard']);
+                    }
+                  },
+                },
+              ]
+            : []),
           {
             label: 'profile',
             icon: 'pi pi-user',
@@ -80,6 +94,10 @@ export class IndexNavbarComponent implements OnInit {
         ],
       },
     ];
+  }
+
+  toggleDrawer() {
+    this.isDrawerOpen = !this.isDrawerOpen;
   }
 
   setNavbarOpen() {

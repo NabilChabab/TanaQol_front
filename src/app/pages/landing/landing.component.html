@@ -2,7 +2,7 @@
   class="header relative items-center flex justify-center w-full"
   style="
     height: 100vh !important;
-    background-image: url('../../../assets/img/2009-Ford-Focus-RS-011-1080.jpg');
+    background-image: url('../../../assets/img/919154.jpg');
     object-fit: cover;
     background-size: cover;
     background-position: center;
@@ -58,7 +58,7 @@
         >
           <img
             alt="..."
-            src="../../../assets/img/919154.jpg"
+            src="../../../assets/img/2009-Ford-Focus-RS-011-1080.jpg"
             class="w-full align-middle rounded-t-lg"
           />
           <blockquote class="relative p-8 mb-4">
@@ -159,52 +159,5 @@
       </div>
     </div>
   </div>
-</section>
-<section class="md:mt-40 pb-40 relative" id="categories" style="height: 100vh">
-  <h2 class="font-semibold text-4xl text-black text-center">
-    <span style="color: black"> T A N A Q O L</span> - About us!
-  </h2>
-  <div class="container mx-auto overflow-hidden pb-20 mt-48">
-    <div class="card">
-      <p-carousel
-      [value]="cars"
-      [numVisible]="4"
-      [numScroll]="1"
-      [circular]="true"
-      [autoplayInterval]="3000"
-      (onPageChange)="onPageChange($event)"
-      [showNavigators]="true"
-      >
-        <ng-template let-car pTemplate="item">
-          <div
-            class=" rounded m-2 p-4"
-          >
-            <div class="mb-4">
-              <div class="relative mx-auto">
-                <img
-                  [src]="car.image"
-                  [alt]="car.name"
-                  class="rounded-border"
-                  style="width: 150px;"
-                />
-                <div
-                  class="absolute text-white bg-black rounded-lg px-3 text-center font-bold"
-                  [ngStyle]="{ 'left.px': 5, 'top.px': 5 }"
-                  style="font-size: 14px;"
-                >
-                  {{ car.tag }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </ng-template>
-      </p-carousel>
-      <div class="flex justify-center mt-3">
-        <span *ngFor="let car of cars; let i = index"
-              class="dot"
-              [ngClass]="{ 'active-dot': i === currentIndex }">
-        </span>
-      </div>
-    </div>
-  </div>
+  <app-ride-options></app-ride-options>
 </section>
