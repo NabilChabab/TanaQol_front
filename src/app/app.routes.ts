@@ -13,6 +13,7 @@ import { DriverStatisticsComponent } from './pages/dashboard/driver/statistics/d
 import { DriverComponent } from './layouts/driver/driver.component';
 import { UsersComponent } from './pages/dashboard/admin/users/users.component';
 import { VehicleComponent } from './pages/dashboard/admin/vehicles/vehicles.component';
+import { RoleRequestsComponent } from './pages/dashboard/admin/role-requests/role-requests.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,7 @@ export const routes: Routes = [
     component: AdminComponent,
     children: [
       { path: 'dashboard', component: StatisticsComponent, canActivate : [RoleGuard], data: { role: 'ROLE_ADMIN' } },
+      { path: 'role-requests', component: RoleRequestsComponent, canActivate : [RoleGuard], data: { role: 'ROLE_ADMIN' } },
       { path: 'users', component: UsersComponent, canActivate : [RoleGuard], data: { role: 'ROLE_ADMIN' } },
       { path: 'vehicles', component: VehicleComponent, canActivate : [RoleGuard], data: { role: 'ROLE_ADMIN' } },
     ]
