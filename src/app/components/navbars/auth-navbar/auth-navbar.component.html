@@ -1,9 +1,9 @@
-<nav class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg shadow glass-nav">
+<nav class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg shadow bg-black">
   <div style="display: flex ; align-items: center; justify-content: space-between; width: 100%" class="container mx-auto">
     <div>
       <a
         [routerLink]="['/']"
-        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+        class="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
         href="#pablo"
       >
         T A N A Q O L
@@ -13,7 +13,7 @@
     <div style="display: flex ; align-items: center; justify-content: center;width: 50%">
       <a
         [routerLink]="['/']"
-        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        class="text-white text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
         href="#pablo"
       >
         Home
@@ -21,28 +21,28 @@
 
       <a
         [routerLink]="['/']"
-        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        class="text-white text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
         href="#pablo"
       >
         About us
       </a>
       <a
         [routerLink]="['/']"
-        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        class="text-white text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
         href="#pablo"
       >
         Categories
       </a>
       <a
         [routerLink]="['/']"
-        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        class="text-white text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
         href="#pablo"
       >
         Rides
       </a>
       <a
         [routerLink]="['/']"
-        class="text-blueGray-800 text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
+        class="text-white text-sm font-bold leading-relaxed inline-block mx-4 py-2 whitespace-nowrap"
         href="#pablo"
       >
         Contact us
@@ -57,7 +57,7 @@
         <li class="flex items-center ml-3">
           <button
             *ngIf="isLoginRoute()"
-            class="text-white bg-black rounded-full active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+            class="text-black bg-white rounded-full active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
             type="button"
             [routerLink]="['/auth/register']"
           >
@@ -65,7 +65,7 @@
           </button>
           <button
             *ngIf="isRegisterRoute()"
-            class="text-white bg-black rounded-full active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+            class="text-black bg-white rounded-full active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
             type="button"
             [routerLink]="['/auth/login']"
           >
