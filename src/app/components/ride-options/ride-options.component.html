@@ -1,0 +1,9 @@
+<div class="mt-20">
+  <div class="card flex justify-center items-center gap-6">
+    <a *ngFor="let option of rideOptions"
+       [href]="option.link"
+       class="bg-black text-white font-bold px-6 py-1 rounded-full">
+      <span>{{ option.name }}</span>
+    </a>
+  </div>
+</div>
