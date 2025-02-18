@@ -53,11 +53,14 @@ export class LoginComponent implements OnInit {
         next: (response: any) => {
           this.loading = false;
           this.router.navigate(['/']);
+          setTimeout(()=>{
+            window.location.reload();
+          } , 1000);
         },
         error: (error) => {
           setTimeout(() => {
             this.loading = false;
-          }, 2000);
+          }, 3000);
           this.errorMessages = {};
           if (error.error) {
             const backendErrors = error.error;
