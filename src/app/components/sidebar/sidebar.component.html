@@ -98,7 +98,27 @@
           </a>
         </li>
 
-
+        <li class="items-center">
+          <a
+            [routerLink]="['/admin/role-requests']"
+            class="text-xs  py-3 font-bold block"
+            routerLinkActive
+            #roleRequest="routerLinkActive"
+            [ngClass]="
+              roleRequest.isActive
+                ? 'text-blueGray-600 hover:text-blueGray-700'
+                : 'text-blueGray-300 hover:text-blueGray-500'
+            "
+          >
+            <i
+              class="fas fa-users mr-2 text-sm"
+              [ngClass]="
+                roleRequest.isActive ? 'opacity-75' : 'text-blueGray-300'
+              "
+            ></i>
+            Driver Mode Requests
+          </a>
+        </li>
 
         <li class="items-center">
           <a
