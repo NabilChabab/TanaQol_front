@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_BASE_URL } from '../../../app.constants';
+import { API_BASE_URL, MAP_KEY } from '../../../app.constants';
 
 export enum RideStatus {
   REQUESTED = 'REQUESTED',
@@ -152,7 +152,7 @@ export class RideService {
   }
 
   calculateRoute(origin: google.maps.LatLng, destination: google.maps.LatLng): Promise<any> {
-    const apiKey = 'AIzaSyCleIQ2nzeDuqWj6C8c7J7CDywCmmlNSMU';
+    const apiKey = MAP_KEY;
     const url = `https://routes.googleapis.com/directions/v2:computeRoutes`;
 
     const requestBody = {
