@@ -15,6 +15,7 @@ import { AuthService } from '../../core/services/auth/auth.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { CITIES_API } from '../../app.constants';
 
 interface City {
   id: number;
@@ -65,6 +66,8 @@ export class IndexComponent implements OnInit {
   @ViewChild('map') map!: google.maps.Map;
 
   // Search inputs
+
+  private cities_api = CITIES_API;
   pickupQuery: string = '';
   destinationQuery: string = '';
   pickupSuggestions: (City | MainPlace)[] = [];
@@ -128,7 +131,7 @@ export class IndexComponent implements OnInit {
 
   fetchCitiesData(): void {
     this.http
-      .get<City[]>('https://api.wondersofmorocco.xyz/cities')
+      .get<City[]>(this.cities_api)
       .subscribe((cities) => {
         this.cities = cities;
         this.allMainPlaces = cities.flatMap((city) => city.main_places || []);
