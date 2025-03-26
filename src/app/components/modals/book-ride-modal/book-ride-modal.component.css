@@ -84,7 +84,7 @@
 /* Suggestions */
 .suggestions {
   position: absolute;
-  width: 100%;
+  width: auto;
   background: black;
   color: white;
   border: 1px solid #ddd;
@@ -106,7 +106,7 @@
 }
 
 .suggestion-item:hover {
-  background-color: #11a104;
+  background-color: #085001;
 }
 
 .suggestion-item i {
@@ -131,10 +131,6 @@
   gap: 5px;
 }
 
-.form-group label {
-  font-weight: 500;
-  color: #555;
-}
 
 /* Estimate Container */
 .estimate-container {
@@ -160,7 +156,6 @@
 .estimate-value {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #11a104;
 }
 
 /* Book Button */

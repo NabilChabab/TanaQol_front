@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { API_BASE_URL, MAP_KEY } from '../../../app.constants';
+import { NotificationService } from '../notificatons/notifications.service';
 
 export enum RideStatus {
   REQUESTED = 'REQUESTED',
   ACCEPTED = 'ACCEPTED',
   IN_PROGRESS = 'IN_PROGRESS',
   COMPLETED = 'COMPLETED',
-  CANCELLED = 'CANCELLED'
+  CANCELLED = 'CANCELLED',
 }
 
 export enum RideType {
   STANDARD = 'STANDARD',
   PREMIUM = 'PREMIUM',
-  SHARED = 'SHARED'
+  SHARED = 'SHARED',
 }
 
 export interface Ride {
@@ -34,17 +35,22 @@ export interface Ride {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RideService {
   private apiUrl = API_BASE_URL;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private notificationService: NotificationService
+  ) {}
 
   createRide(ride: Ride): Observable<Ride> {
     // Get customerId from localStorage if not provided
     if (!ride.customer) {
-      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      const currentUser = JSON.parse(
+        localStorage.getItem('currentUser') || '{}'
+      );
       if (currentUser && currentUser.id) {
         ride.customer = { id: currentUser.id };
       }
@@ -55,7 +61,20 @@ export class RideService {
       ride.rideStatus = RideStatus.REQUESTED;
     }
 
-    return this.http.post<Ride>(`${this.apiUrl}/rides/save`, ride);
+    return this.http.post<Ride>(`${this.apiUrl}/rides/save`, ride).pipe(
+      tap({
+        next: () =>
+          this.notificationService.showSuccess(
+            'Let\'s go!',
+            'Your ride has been requested'
+          ),
+        error: () =>
+          this.notificationService.showError(
+            'Registration Failed',
+            'Please check your details and try again'
+          ),
+      })
+    );
   }
 
   getRide(id: string): Observable<Ride> {
@@ -75,20 +94,26 @@ export class RideService {
   }
 
   updateRideStatus(rideId: string, status: string): Observable<Ride> {
-    return this.http.put<Ride>(`${this.apiUrl}/rides/${rideId}/status?status=${status}`, {});
+    return this.http.put<Ride>(
+      `${this.apiUrl}/rides/${rideId}/status?status=${status}`,
+      {}
+    );
   }
 
   assignDriver(rideId: string, driverId: string): Observable<Ride> {
-    return this.http.put<Ride>(`${this.apiUrl}/rides/${rideId}/assign/${driverId}`, {});
+    return this.http.put<Ride>(
+      `${this.apiUrl}/rides/${rideId}/assign/${driverId}`,
+      {}
+    );
   }
 
   // Calculate price based on distance and ride type
   calculatePrice(distance: number, rideType: string): number {
     const basePrice = 15.0; // Base price in MAD
-    const pricePerKm = 2.5;  // Price per km in MAD
+    const pricePerKm = 2.5; // Price per km in MAD
 
     let multiplier = 1.0;
-    switch(rideType) {
+    switch (rideType) {
       case RideType.PREMIUM:
         multiplier = 1.5;
         break;
@@ -99,11 +124,14 @@ export class RideService {
         multiplier = 1.0;
     }
 
-    return (basePrice + (distance * pricePerKm)) * multiplier;
+    return (basePrice + distance * pricePerKm) * multiplier;
   }
 
   // Calculate estimated distance using Google Maps Distance Matrix API
-  calculateDistance(origin: google.maps.LatLng, destination: google.maps.LatLng): Promise<number> {
+  calculateDistance(
+    origin: google.maps.LatLng,
+    destination: google.maps.LatLng
+  ): Promise<number> {
     return new Promise((resolve, reject) => {
       const service = new google.maps.DistanceMatrixService();
       service.getDistanceMatrix(
@@ -132,7 +160,7 @@ export class RideService {
           (position) => {
             resolve({
               lat: position.coords.latitude,
-              lng: position.coords.longitude
+              lng: position.coords.longitude,
             });
           },
           (error) => {
@@ -146,12 +174,15 @@ export class RideService {
   }
 
   // Get current user from localStorage
-  getCurrentUser(): any {
-    const currentUser = localStorage.getItem('currentUser');
-    return currentUser ? JSON.parse(currentUser) : null;
+  getCurrentUser(): { id: string } | null {
+    const userId = localStorage.getItem('authId'); // Assuming the ID is stored as 'userId'
+    return userId ? { id: userId } : null; // Return an object with the `id` property
   }
 
-  calculateRoute(origin: google.maps.LatLng, destination: google.maps.LatLng): Promise<any> {
+  calculateRoute(
+    origin: google.maps.LatLng,
+    destination: google.maps.LatLng
+  ): Promise<any> {
     const apiKey = MAP_KEY;
     const url = `https://routes.googleapis.com/directions/v2:computeRoutes`;
 
@@ -175,12 +206,23 @@ export class RideService {
       travelMode: 'DRIVE',
     };
 
-    return this.http.post(url, requestBody, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Goog-Api-Key': apiKey,
-        'X-Goog-FieldMask': 'routes.duration,routes.distanceMeters,routes.polyline.encodedPolyline',
-      },
-    }).toPromise();
+    return this.http
+      .post(url, requestBody, {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Goog-Api-Key': apiKey,
+          'X-Goog-FieldMask':
+            'routes.duration,routes.distanceMeters,routes.polyline.encodedPolyline',
+        },
+      })
+      .toPromise();
+  }
+
+  acceptRide(rideId: any) {
+    return this.http.post(`${this.apiUrl}/rides/${rideId}/accept`, null);
+  }
+
+  refuseRide(rideId: any) {
+    return this.http.post(`${this.apiUrl}/rides/${rideId}/refuse`, null);
   }
 }

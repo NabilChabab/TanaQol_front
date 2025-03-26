@@ -14,6 +14,7 @@ import { DriverComponent } from './layouts/driver/driver.component';
 import { UsersComponent } from './pages/dashboard/admin/users/users.component';
 import { VehicleComponent } from './pages/dashboard/admin/vehicles/vehicles.component';
 import { RoleRequestsComponent } from './pages/dashboard/admin/role-requests/role-requests.component';
+import { RideRequestsComponent } from './pages/dashboard/driver/ride-requests/ride-requests.component';
 
 export const routes: Routes = [
   {
@@ -41,6 +42,7 @@ export const routes: Routes = [
     component: DriverComponent,
     children: [
       { path: 'dashboard', component: DriverStatisticsComponent, canActivate : [RoleGuard], data: { role: 'ROLE_DRIVER' } },
+      { path: 'ride-requests', component: RideRequestsComponent, canActivate : [RoleGuard], data: { role: 'ROLE_DRIVER' } },
     ]
   },
   {

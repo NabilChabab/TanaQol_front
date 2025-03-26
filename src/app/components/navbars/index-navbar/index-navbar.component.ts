@@ -9,12 +9,13 @@ import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { SidebarModule } from 'primeng/sidebar';
 import { DriverRoleModalComponent } from '../../modals/driver-role-modal/driver-role-modal.component';
+import { BookRideModalComponent } from '../../modals/book-ride-modal/book-ride-modal.component';
 
 @Component({
   selector: 'app-index-navbar',
   templateUrl: './index-navbar.component.html',
   standalone: true,
-  imports: [RouterModule, CommonModule, MenuModule , SidebarModule , DriverRoleModalComponent],
+  imports: [RouterModule, CommonModule, MenuModule , SidebarModule , DriverRoleModalComponent , BookRideModalComponent ],
 })
 export class IndexNavbarComponent implements OnInit {
   items: MenuItem[] | undefined;
