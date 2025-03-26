@@ -1,2 +1,14 @@
-<router-outlet></router-outlet>
-<p-toast position="bottom-center"></p-toast>
+<div class="app-container">
+  <router-outlet></router-outlet>
+
+  <!-- Ride Request Notification Component -->
+  <app-ride-request-notification
+    *ngIf="activeRideRequest"
+    [rideRequest]="activeRideRequest"
+    (accept)="onAcceptRide($event)"
+    (decline)="onDeclineRide($event)"
+    (close)="onCloseNotification()">
+  </app-ride-request-notification>
+
+  <p-toast position="bottom-center"></p-toast>
+</div>

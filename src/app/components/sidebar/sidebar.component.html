@@ -98,10 +98,10 @@
           </a>
         </li>
 
-        <li class="items-center">
+        <li class="items-center" >
           <a
-            [routerLink]="['/admin/role-requests']"
-            class="text-xs  py-3 font-bold block"
+            [routerLink]="[isAdmin() ? '/admin/role-requests' : '/driver/ride-requests']"
+            class="text-xs py-3 font-bold block"
             routerLinkActive
             #roleRequest="routerLinkActive"
             [ngClass]="
@@ -116,9 +116,10 @@
                 roleRequest.isActive ? 'opacity-75' : 'text-blueGray-300'
               "
             ></i>
-            Driver Mode Requests
+            {{ isAdmin() ? 'Driver Mode Requests' : 'Ride Requests' }}
           </a>
         </li>
+
 
         <li class="items-center">
           <a

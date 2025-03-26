@@ -1,0 +1,170 @@
+<form class="mt-5">
+  <div class="flex items-center justify-center w-full">
+    <label
+      class="w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-transparent dark:hover:bg-gray-800 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+    >
+      <google-map
+        #map
+        [center]="mapCenter"
+        [zoom]="mapZoom"
+        width="100%"
+        height="250px"
+        [options]="{
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: true,
+          zoomControl: true,
+          styles: [
+            {
+              featureType: 'poi',
+              elementType: 'labels',
+              stylers: [{ visibility: 'off' }]
+            }
+          ]
+        }"
+      >
+        <!-- Route Path -->
+        <map-polyline
+          *ngIf="routePath.length > 0"
+          [path]="routePath"
+          [options]="polylineOptions"
+        ></map-polyline>
+
+        <!-- Markers -->
+        <map-marker
+          *ngFor="let marker of mapMarkers"
+          [position]="marker.position"
+          [title]="marker.title"
+          [options]="{ icon: marker.icon }"
+        ></map-marker>
+      </google-map>
+    </label>
+  </div>
+  <div class="grid gap-6 mb-6 md:grid-cols-2 mt-5">
+    <div>
+      <label
+        for="pickupQuery"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >From location</label
+      >
+      <input
+        id="pickupQuery"
+        [(ngModel)]="pickupQuery"
+        (input)="onPickupChange()"
+        name="pickupQuery"
+        placeholder="Enter pickup location"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      />
+      <!-- Pickup Suggestions -->
+      <div
+        *ngIf="pickupQuery && pickupSuggestions.length"
+        class="suggestions pickup-suggestions"
+      >
+        <div
+          *ngFor="let suggestion of pickupSuggestions"
+          (click)="onSelectPickup(suggestion)"
+          class="suggestion-item"
+        >
+          <i class="pi pi-map-marker"></i>
+          <span>{{ suggestion.name }}</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        for="destinationQuery"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >To destination</label
+      >
+      <input
+        id="destinationQuery"
+        [(ngModel)]="destinationQuery"
+        (input)="onDestinationChange()"
+        name="destinationQuery"
+        placeholder="Enter destination"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      />
+      <!-- Destination Suggestions -->
+      <div
+        *ngIf="destinationQuery && destinationSuggestions.length"
+        class="suggestions destination-suggestions"
+      >
+        <div
+          *ngFor="let suggestion of destinationSuggestions"
+          (click)="onSelectDestination(suggestion)"
+          class="suggestion-item"
+        >
+          <i class="pi pi-flag"></i>
+          <span>{{ suggestion.name }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="ride-options-section md:col-span-2">
+      <form [formGroup]="bookingForm" class="ride-form">
+        <div class="form-group mb-4">
+          <label for="rideType" class="block mb-2 text-sm font-medium text-white">Ride Type</label>
+          <select
+            id="rideType"
+            formControlName="rideType"
+            (change)="onRideTypeChange($event)"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option *ngFor="let option of rideOptions" [value]="option.value" class="bg-black">{{ option.label }}</option>
+          </select>
+        </div>
+
+        <!-- Estimated Price and Distance -->
+        <div
+         *ngIf="selectedPickup && selectedDestination"
+          class="estimate-container flex justify-between mb-4"
+        >
+          <div class="estimate-box bg-gray-100 dark:bg-gray-800 p-3 rounded-lg w-full mr-2" style="box-shadow: 8px 4px 10px rgba(76, 175, 80, 0.5);">
+            <div class="estimate-label text-sm font-medium text-gray-900 dark:text-white">Distance</div>
+            <div class="estimate-value text-green-800 text-lg font-bold">
+              {{ estimatedDistance | number : "1.1-1" }} km
+            </div>
+          </div>
+          <div class="estimate-box bg-gray-100 dark:bg-gray-800 p-3 rounded-lg w-full ml-2" style="box-shadow: 8px 4px 10px rgba(76, 175, 80, 0.5);">
+            <div class="estimate-label text-sm font-medium text-gray-900 dark:text-white">Estimated Price</div>
+            <div class="estimate-value text-green-800 text-lg font-bold">
+              {{ estimatedPrice | currency : "MAD" : "symbol" : "1.0-0" }}
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end mt-6 w-full">
+          <button
+            (click)="bookRide()"
+            type="button"
+            [disabled]="!selectedPickup || !selectedDestination || isLoading"
+            class="cursor-pointer px-6 py-3 text-white bg-green-700 hover:bg-green-800 rounded-full font-medium"
+          >
+            <span *ngIf="!loading">Find a Driver</span>
+            <span *ngIf="loading" class="car-animation">🚗💨</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</form>
+
+
+<style>
+  .car-animation {
+    display: inline-block;
+    animation: ride 1.5s linear infinite;
+    font-size: 25px;
+  }
+
+  @keyframes ride {
+    0% {
+      transform: translateX(50%);
+    }
+    50% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+</style>

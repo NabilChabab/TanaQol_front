@@ -18,4 +18,10 @@ export class RoleRequestService {
         params: { page: page.toString(), size: size.toString() }
       });
     }
+
+    acceptOrRefuse(requestId: string, status: string): Observable<any> {
+      return this.http.put<any>(`${this.apiUrl}/role-change-requests/${requestId}/status`, null, {
+        params: { status },
+      });
+    }
 }

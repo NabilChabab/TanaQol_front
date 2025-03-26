@@ -4,11 +4,13 @@
   <div class="rounded-t mb-0 px-4 py-3 border-0 bg-white">
     <div class="flex flex-wrap items-center">
       <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-        <h3 class="font-semibold text-base text-blueGray-500">Pending Requests</h3>
+        <h3 class="font-semibold text-base text-blueGray-500">
+          Pending Requests
+        </h3>
       </div>
-      <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-
-      </div>
+      <div
+        class="relative w-full px-4 max-w-full flex-grow flex-1 text-right"
+      ></div>
     </div>
   </div>
   <div class="block w-full overflow-x-auto">
@@ -19,33 +21,38 @@
           <th
             class="px-6 text-blueGray-600 align-middle py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
           >
-            Brand
+            Client
           </th>
           <th
             class="px-6 text-blueGray-600 align-middle py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
           >
-            Driver Name
+            Phone Number
+          </th>
+          <th
+            class="px-6 text-blueGray-600 align-middle py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+          >
+            Pickup Location
           </th>
 
           <th
             class="px-6 text-blueGray-600 align-middle py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
           >
-            Type
+            Destination
           </th>
           <th
             class="px-6 text-blueGray-600 align-middle py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
           >
-            License Plate
+            Ride Type
           </th>
           <th
             class="px-6 text-blueGray-600 align-middle py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
           >
-            License Number
+            Ride Status
           </th>
           <th
             class="px-6 text-blueGray-600 align-middle py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
           >
-            License Expiry Date
+            Price
           </th>
           <th
             class="px-6 text-blueGray-600 align-middle py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -57,125 +64,101 @@
       <div *ngIf="loading" class="loading-spinner">
         <div class="spinner"></div>
       </div>
+      <!-- Confirmation Modal -->
+
       <tbody>
         <tr *ngFor="let request of requests">
           <td
             class="border-t-0 px-6 flex gap-6 justify-start items-center align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500"
           >
             <img
-              [src]="'../../../assets/img/2009-Ford-Focus-RS-011-1080.jpg'"
+              [src]="'../../../assets/img/man.png'"
               alt="profile"
               class="rounded-full h-10 w-10 object-cover"
             />
-          <span >{{ request.brand }}</span>
-          </td>
-
-          <td
-            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500"
-          >
-            {{ request.userName }}
+            <span>{{ request.customer.firstName }}</span>
           </td>
           <td
             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500"
           >
-            {{ request.vehicleType }}
+            {{ request.customer.phone }}
           </td>
           <td
             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500"
           >
-            {{ request.licensePlate }}
+            {{ request.pickupAddress }}
           </td>
           <td
             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500"
           >
-            {{ request.licenseNumber ?? "- - - - -" }}
+            {{ request.destinationAddress }}
           </td>
           <td
             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500"
           >
-            {{ request.licenseExpiryDate ?? "- - - - -" }}
+            {{ request.rideType }}
           </td>
           <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
             <span
               class="px-2 py-1 text-xs font-semibold rounded-full"
               [ngClass]="{
-                'bg-green-100 text-green-700': request.status === 'APPROVED',
-                'bg-red-100 text-red-700': request.status === 'REJECTED',
-                'bg-blue-100 text-blue-700': request.status === 'PENDING'
+                'bg-green-100 text-green-700': request.rideStatus === 'ACCEPTED',
+                'bg-red-100 text-red-700': request.rideStatus === 'REJECTED',
+                'bg-blue-100 text-blue-700': request.rideStatus === 'REQUESTED'
               }"
             >
-              {{ request.status ?? "- - - - -" }}
+              {{ request.rideStatus ?? "- - - - -" }}
             </span>
+          </td>
+          <td
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500"
+          >
+            $ {{ request.price ? (request.price | number : "1.2-2") : "0.0" }}
           </td>
           <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
             <i
-              class="fa-solid fa-circle-check text-green-700 cursor-pointer me-5 "
-              style="font-size: large"
-               (click)="openModal('ACCEPT', request)"
+              class="fa-solid fa-circle-check text-green-700 cursor-pointer text-lg me-5"
+              (click)="openModal('ACCEPT', request)"
             ></i>
             <i
-              class="fa-solid fa-circle-xmark text-red-500 cursor-pointer me-5"
-              style="font-size: large"
+              class="fa-solid fa-circle-xmark text-red-500  cursor-pointer text-lg"
               (click)="openModal('REJECT', request)"
-            ></i>
-            <i
-              class="fa-solid fa-eye text-lightBlue-600 cursor-pointer "
-              style="font-size: large"
             ></i>
           </td>
         </tr>
       </tbody>
+
+      <div
+        id="confirmationModal"
+        class="fixed inset-0 z-50 hidden overflow-y-auto bg-gray-900 bg-opacity-50 flex justify-center items-center"
+      >
+        <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">
+            Confirmer l'action
+          </h2>
+          <p class="text-gray-600 mb-4">
+            Êtes-vous sûr de vouloir
+            <strong id="modalActionText">accepter</strong> cette demande ?
+          </p>
+
+          <div class="flex justify-end gap-3">
+            <button
+              class="bg-gray-300 px-4 py-2 rounded-md text-gray-700 hover:bg-gray-400"
+              onclick="document.getElementById('confirmationModal').classList.add('hidden')"
+            >
+              Annuler
+            </button>
+            <button
+              id="confirmActionBtn"
+              class="text-white px-4 py-2 rounded-md"
+            >
+              Confirmer
+            </button>
+          </div>
+        </div>
+      </div>
     </table>
-    <div class="mb-5 mt-5 float-right mr-4">
-      <a
-        class="text-black px-3 py-1 rounded cursor-pointer"
-        (click)="prevPage()"
-      >
-        <i class="fas fa-angle-left"></i>
-      </a>
-
-      <span class="text-blueGray-500">
-        {{ page + 1 }} of {{ totalPages }}
-      </span>
-
-      <a
-        class="text-black px-3 py-1 rounded cursor-pointer"
-        (click)="nextPage()"
-      >
-        <i class="fas fa-angle-right"></i>
-      </a>
-    </div>
   </div>
-</div>
-
-<div
-id="confirmationModal"
-class="fixed inset-0 z-50 hidden overflow-y-auto bg-gray-900 bg-opacity-50 flex justify-center items-center"
->
-<div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
-  <h2 class="text-xl font-semibold text-gray-700 mb-4">
-    Confirmer l'action
-  </h2>
-  <p class="text-gray-600 mb-4">
-    Êtes-vous sûr de vouloir
-    <strong id="modalActionText">accepter</strong> cette demande ?
-  </p>
-
-  <div class="flex justify-end gap-3">
-    <button
-      class="bg-gray-300 px-4 py-2 rounded-md text-gray-700 hover:bg-gray-400"
-      onclick="document.getElementById('confirmationModal').classList.add('hidden')"
-    >
-      Annuler
-    </button>
-    <button
-      id="confirmActionBtn"
-      class="text-white px-4 py-2 rounded-md"
-    >
-      Confirmer
-    </button>
-  </div>
-</div>
 </div>
 
 <style>
